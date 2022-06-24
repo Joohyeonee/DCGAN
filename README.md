@@ -8,7 +8,7 @@
 
 2. Architecture
  - Generator<br/>
- >   z(noise)   : 1 x 100 
+ >   z(noise)   : 1 x 100 / uniform random noise vector
  >
  >       |      f(project and reshape / )
  >
