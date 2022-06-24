@@ -53,4 +53,7 @@
  >
  >      H(h4)   : 1 x 1 x 1 = D  
 
+ 3. Loss Function
+  - Binary Cross Entropy Loss : 0(fake) 또는 1(real)로 구분
+
 ---
