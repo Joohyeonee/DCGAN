@@ -12,19 +12,19 @@
  >
  >       |      f(project and reshape / )
  >
- >      f(z)    : 4 x 4 x 512
+ >      f(z)    : 4 x 4 x 1024
  >
  >       |      T(transpose convolution / kernel size = )   
  >
- >     T(f(z))   : 8 x 8 x 256 = t1
+ >     T(f(z))   : 8 x 8 x 512 = t1
  >
  >       |      T(transpose convolution / kernel size = )
  >
- >     T(t1)    : 16 x 16 x 128 = t2
+ >     T(t1)    : 16 x 16 x 256 = t2
  >
  >       |      T(transpose convolution / kernel size = )
  >
- >     T(t2)    : 32 x 32 x 64 = t3
+ >     T(t2)    : 32 x 32 x 128 = t3
  >
  >       |      T(transpose convolution / kernel size =  )
  >
@@ -35,19 +35,19 @@
  >
  >       |      H(Convolution / kernel size = 4 x 4 x 3 x 64, stride = 2, padding = 1)
  >
- >      H(X)    : 32 x 32 x 64 = h1
+ >      H(X)    : 32 x 32 x 128 = h1
  >
  >       |      H(Convolution / kernel size = 4 x 4 x 64 x 128, stride = 2, padding = 1)
  >
- >      H(h1)   : 16 x 16 x 128 = h2
+ >      H(h1)   : 16 x 16 x 256 = h2
  >
  >       |      H(Convolution  / kernel size = 4 x 4 x 128 x 256, stride = 2, padding = 1)
  >
- >      H(h2)   : 8 x 8 x 256 = h3
+ >      H(h2)   : 8 x 8 x 512 = h3
  >
  >       |      H(Convolution  / kernel size = 4 x 4 x 256 x 512, stride = 2, padding = 1)
  >
- >      H(h3)   : 4 x 4 x 512 = h4
+ >      H(h3)   : 4 x 4 x 1024 = h4
  >
  >       |      H(Convolution  / kernel size =  4 x 4 x 512 x 1, stride = 2, padding = 1)
  >
