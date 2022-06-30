@@ -2,6 +2,15 @@
 ---
 ![링크](https://arxiv.org/pdf/1511.06434.pdf)
 
+0. functions
+ - get_data() : 입출력 데이터를 담는 Tensor 생성
+ - randn() : 가중치 초기화
+ - simple_network() : y = Wx + b
+ - loss_fn() : MSE 계산
+ - cuda() : GPU에서 동작하는 Tensor 객체로 복사
+ - optim.optimizer() : optimizer 적용
+ - optimizer.step() : 가중치 갱신
+
 1. terminology
  - Discriminator : fake 이미지와 real 이미지를 구별한다.
  - Generator : uniform random noise로부터 fake 이미지를 생성한다.
