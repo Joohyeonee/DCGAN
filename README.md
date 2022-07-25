@@ -66,3 +66,8 @@
   - Binary Cross Entropy Loss : 0(fake) 또는 1(real)로 구분
 
 ---
+3. DCGAN의 차이점
+ - 기존 GAN의 Fully-Connected Layer, Pooling Layer를 Convolution Layer로 대체(지역적 정보 손실 방지)
+ - Batch Normalization 도입 : 입력 데이터의 평균, 분산을 조정하여 학습 효과 증대
+ - 학습 검증을 위한 방법 도입 : 잠재 공간에 의미 있는 단위(침실 이미지를 학습할 시 창문, 침대 등의 단위)가 존재하는지 여부 확인 -> randomized vector의 값을 조금씩 변경하여 확인
+ - 수많은 학습을 통한 세부 조건 확립 : learning rate, weight initialization, activation function 등
