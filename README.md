@@ -1,7 +1,9 @@
+
+
 #GAN
+---
 
 #DCGAN
----
 ![링크](https://arxiv.org/pdf/1511.06434.pdf)
 
 0. functions
@@ -73,7 +75,7 @@
  - Batch Normalization 도입 : 입력 데이터의 평균, 분산을 조정하여 학습 효과 증대
  - 학습 검증을 위한 방법 도입 : 잠재 공간에 의미 있는 단위(침실 이미지를 학습할 시 창문, 침대 등의 단위)가 존재하는지 여부 확인 -> randomized vector의 값을 조금씩 변경하여 확인
  - 수많은 학습을 통한 세부 조건 확립 : learning rate, weight initialization, activation function 등
- 
+ ---
  
  #GPEN(Gan Prior Embedded Network for Blind FAce Restoration in the Wild) / embed a GAN prior network into a DNN
  0. Introduction
@@ -93,5 +95,11 @@
  - GAN block의 구조는 여러 option이 있지만 StyleGAN v2의 구조 채택 / StyleGAN은 각 GAN block에 두 개의 다른 noise input을 요구함
  - GAN block의 개수는 U-shapped DNN에서 추출된 skipped feature map의 개수와 동일
  - GAN network를 U-shaped GPEN에 포함하도록 하기 위해서, StyleGAN과 다르게 noise input은 모든 GAN block에 재사용됨(경험적으로 발견)
- - 
-  
+ - latent code z와 noise는 각각 global한 얼굴 구조를 control하는 deeper feature과 local detail을 control하는 얕은 layer의 output으로 교체됨
+ - GPEN의 입력으로 들어가기 전에 bilinear interpolator을 사용하여 원하는 크기로 resize됨
+
+2. Training Strategy
+ - Loss : adversarial loss, content loss, feature matching loss 3가지를 모두 사용함
+ >> feature mapping loss : perceptual loss와 비슷하지만 pre-trained VGG network를 사용하는 대신 discriminator 기반
+ >> input image에 대한 discriminator output과 SR 이미지에 대한 discriminator의 output의 norm의 평균을 minimize
+ - GAN train 시 FFHQ dataset 사용(1024 x 1024), 다른 SOTA 모델과 비교 시 (evaluation 시) CelebA-HQ dataset 사용
