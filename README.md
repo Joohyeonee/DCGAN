@@ -99,7 +99,7 @@
  - GPEN의 입력으로 들어가기 전에 bilinear interpolator을 사용하여 원하는 크기로 resize됨
 
 2. Training Strategy
- - Loss : adversarial loss, content loss, feature matching loss 3가지를 모두 사용함
+ - Loss : adversarial loss, content loss, feature matching loss 3가지를 모두 사용함<br/>
  > feature mapping loss : perceptual loss와 비슷하지만 pre-trained VGG network를 사용하는 대신 discriminator 기반
  > input image에 대한 discriminator output과 SR 이미지에 대한 discriminator의 output의 norm의 평균을 minimize
  - GAN train 시 FFHQ dataset 사용(1024 x 1024), 다른 SOTA 모델과 비교 시 (evaluation 시) CelebA-HQ dataset 사용
