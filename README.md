@@ -3,7 +3,7 @@
 #GAN
 ---
 
-#DCGAN
+## DCGAN
 ![링크](https://arxiv.org/pdf/1511.06434.pdf)
 
 0. functions
@@ -76,7 +76,7 @@
  - 수많은 학습을 통한 세부 조건 확립 : learning rate, weight initialization, activation function 등
  ---
  
- #GPEN(Gan Prior Embedded Network for Blind FAce Restoration in the Wild) / embed a GAN prior network into a DNN
+ ## GPEN(Gan Prior Embedded Network for Blind FAce Restoration in the Wild) / embed a GAN prior network into a DNN
  0. Introduction
   - face restoration의 발전에도 불구하고 blind face resolution은 알 수 없는 degradation 때문에 문제가 있었음
   - Hifacegan에서는 얼굴 디테일을 복원하기 위한 CSR(Collaborative Suppresion and Replenishment) 접근을 제안했지만 현실 세계의 저화질 이미지를 다루는데 실패했음
