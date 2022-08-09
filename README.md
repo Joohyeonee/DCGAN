@@ -69,7 +69,6 @@
  3. Loss Function
   - Binary Cross Entropy Loss : 0(fake) 또는 1(real)로 구분
 
----
 3. DCGAN의 차이점
  - 기존 GAN의 Fully-Connected Layer, Pooling Layer를 Convolution Layer로 대체(지역적 정보 손실 방지)
  - Batch Normalization 도입 : 입력 데이터의 평균, 분산을 조정하여 학습 효과 증대
