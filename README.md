@@ -98,7 +98,15 @@
  - GPEN의 입력으로 들어가기 전에 bilinear interpolator을 사용하여 원하는 크기로 resize됨
 
 2. Training Strategy
- - Loss : adversarial loss, content loss, feature matching loss 3가지를 모두 사용함<br/>
+ - Loss : adversarial loss, content loss, feature matching loss 3가지를 모두 사용함
+ > LA(adversarial loss) : detail 포함 face 복원, LC(content loss) :  원본의 색 정보 보존, LF(feature matching loss) : discriminator
  > feature mapping loss : perceptual loss와 비슷하지만 pre-trained VGG network를 사용하는 대신 discriminator 기반
  > input image에 대한 discriminator output과 SR 이미지에 대한 discriminator의 output의 norm의 평균을 minimize
  - GAN train 시 FFHQ dataset 사용(1024 x 1024), 다른 SOTA 모델과 비교 시 (evaluation 시) CelebA-HQ dataset 사용
+ - GAN 모델을 GPEN의 decoder로 내장
+ - 저화질, 고화실 이미지를 묶어 전체 네트워크를 학습시킴
+
+3. Conclusion
+ - 기존 DNN에 pre-trained GAN을 내장하여 이를 fine-tunning함(이전 연구는 fine-tuned되지 않은 GAN 추가)
+ - GAN의 latent code와 noise input이 각각 deep feature, shallow feature를 추출하여 global, local information을 보존
+ - GPEN을 사용하여 realistic degradation image도 복원에 성공함 
