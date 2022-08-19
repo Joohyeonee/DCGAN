@@ -109,8 +109,8 @@
  >Architecture
  > - pre-trained GAN : 고화질 이미지 생성을 학습(StyleGAN과 유사), latent code z를 w로 projection하는 mapping network 사용
  > - GAN Block : U-shaped structure에 decoder로 쉽게 embedding될 수 있도록 설계됨
- >> styleGAN2의 style block 구조를 그대로 가져와 mod/demod -> conv 하도록 함
- >> mod/demod : realistic detail을 살리고 style 별 특성을 유지하게 하는 효과
+ >> - styleGAN2의 style block 구조를 그대로 가져와 mod/demod -> conv 하도록 함
+ >> - mod/demod : realistic detail을 살리고 style 별 특성을 유지하게 하는 효과
  > - CNN Encoder에 투입하기 전에 degradation model(blur kernel, downsampling, gaussian noise)를 거쳐 LR 이미지 생성(Blind이므로 random하게 적용됨)
  > - CNN Encoder : LR이미지 x를 입력받아 latent code z로 mapping하는 과정 학습
 
