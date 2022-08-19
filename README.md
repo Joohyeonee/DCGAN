@@ -103,26 +103,34 @@
  - GAN block의 구조는 여러 option이 있지만 StyleGAN v2의 구조 채택 / StyleGAN은 각 GAN block에 두 개의 다른 noise input을 요구함
  - GAN block의 개수는 U-shapped DNN에서 추출된 skipped feature map의 개수와 동일
  - GAN network를 U-shaped GPEN에 포함하도록 하기 위해서, StyleGAN과 다르게 noise input은 모든 GAN block에 재사용됨(경험적으로 발견)
- - latent code z와 noise는 각각 global한 얼굴 구조를 control하는 deeper feature과 local detail을 control하는 얕은 layer의 output으로 교체됨
- - GPEN의 입력으로 들어가기 전에 bilinear interpolator을 사용하여 원하는 크기로 resize됨
+ - latent code z와 noise는 각각 global한 얼굴 구조를 control하는 deeper feature과 local detail을 control하는 shallow layer의 output으로 교체됨(skip-connection)
+ - GPEN의 입력으로 들어가기 전에 bilinear interpolator을 사용하여 원하는 크기(1024x1024)로 resize됨
+ 
  >Architecture
  > - pre-trained GAN : 고화질 이미지 생성을 학습(StyleGAN과 유사), latent code z를 w로 projection하는 mapping network 사용
  > - GAN Block : U-shaped structure에 decoder로 쉽게 embedding될 수 있도록 설계됨
+ >> styleGAN2의 style block 구조를 그대로 가져와 mod/demod -> conv 하도록 함
+ >> mod/demod : realistic detail을 살리고 style 별 특성을 유지하게 하는 효과
+ > - CNN Encoder에 투입하기 전에 degradation model(blur kernel, downsampling, gaussian noise)를 거쳐 LR 이미지 생성(Blind이므로 random하게 적용됨)
  > - CNN Encoder : LR이미지 x를 입력받아 latent code z로 mapping하는 과정 학습
 
 2. Training Strategy
+ >Optimizer : Adam Optimizer 사용
  >Loss : adversarial loss, content loss, feature matching loss 3가지를 모두 사용함
- > - LA(adversarial loss) : detail 포함 face 복원
- > - LC(content loss) :  원본의 색 정보 보존
- > - LF(feature matching loss) : discriminator
- >>feature mapping loss : perceptual loss와 비슷하지만 pre-trained VGG network를 사용하는 대신 discriminator 기반
- >>input image에 대한 discriminator output과 SR 이미지에 대한 discriminator의 output의 norm의 평균을 minimize
+ > - LA(adversarial loss) : softplus 함수(매끄럽게 만든 ReLU 함수) 사용 / detail 포함 face 복원
+ > - LC(content loss) :  L1-norm distanceh 사용 / 원본의 색 정보 보존
+ > - LF(feature matching loss) : pre-trained VGG network가 아닌 discriminator 자체를 사용
+ > - L(final Loss) : LA + a * LC + b * LF(a, b = balancing factor로, a = 1, b = 0.002 사용)
  
  - GAN train 시 FFHQ dataset 사용(1024 x 1024), 다른 SOTA 모델과 비교 시 (evaluation 시) CelebA-HQ dataset 사용
- - GAN 모델을 GPEN의 decoder로 내장
- - 저화질, 고화실 이미지를 묶어 전체 네트워크를 학습시킴
+ - pre-trained GAN 모델을 GPEN의 decoder로 내장
+ - 저화질, 고화질 이미지가 서로 대응되도록 쌍으로 묶어 전체 네트워크를 학습시킴
 
 3. Conclusion
  - 기존 DNN에 pre-trained GAN을 내장하여 이를 fine-tunning함(이전 연구는 fine-tuned되지 않은 GAN 추가)
  - GAN의 latent code와 noise input이 각각 deep feature, shallow feature를 추출하여 global, local information을 보존
  - GPEN을 사용하여 realistic degradation image도 복원에 성공함 
+ - GPEN-w/o-ft(without fine-tunning), GPEN-w/o-noise(without noise), GPEN-add-noise, GPEN을 비교한 결과 original GPEN의 PSNR, lpips, fid 수치가 가장 좋음
+
+4. Appendix
+ - Inference 시 training 과정이 생략되므로 face detection 모듈 필요 -> FastRCNN을 backbone으로 가져와서 detect 해줘야
